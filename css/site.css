@@ -51,10 +51,9 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
 }
 .skip:focus { left: 0; }
 
-/* Wall-scale type: the name, the method words, the channel names, the tagline */
+/* Wall-scale type: the name, the channel names, the tagline */
 .hero h1,
 .close__name,
-.method__list h3,
 .route__name,
 .bb__line {
   font-family: var(--sc-font-display);
@@ -150,32 +149,6 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
 .c-promo   { width: 30%; left: 70%; top: 27%; }
 .c-phone-a { width: 27%; left: 53%; top: 41%; }
 .c-phone-b { width: 23%; left: 80%; top: 51%; }
-
-/* =========================================================
-   2. HOW I WORK
-   The frame for everything after it: four steps, then four cases.
-   ========================================================= */
-.method { padding-block: clamp(4.5rem, 14svh, 9rem) var(--sc-section); }
-.method h2 {
-  max-width: 16ch;
-  font-stretch: 100%;
-  font-weight: 500;
-  font-size: var(--sc-t-2xl);
-  line-height: 1.06;
-  letter-spacing: -0.028em;
-}
-.method__list { list-style: none; margin: clamp(2rem, 5vw, 4rem) 0 0; padding: 0; }
-.method__list li {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: var(--sc-3) clamp(1.5rem, 5vw, 5rem);
-  align-items: baseline;
-  padding-block: clamp(1.25rem, 2.6vw, 2.25rem);
-  border-top: 1px solid var(--sc-hairline-strong);
-}
-.method__list li:last-child { border-bottom: 1px solid var(--sc-hairline-strong); }
-.method__list h3 { font-size: clamp(2.2rem, 6.2vw, 5.8rem); line-height: .9; }
-.method__list p { margin: 0; max-width: 40ch; font-size: var(--sc-t-lg); line-height: 1.4; letter-spacing: -0.012em; }
 
 /* =========================================================
    THE BRIEF
@@ -552,7 +525,6 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
   .pack__row { grid-template-columns: minmax(0, 1fr); gap: var(--sc-7); }
   .pack__item--bewell { padding-bottom: 0; width: 84%; margin-left: auto; }
 
-  .method__list li { grid-template-columns: minmax(0, 1fr); }
   .close__foot { flex-wrap: wrap; }
 }
 
