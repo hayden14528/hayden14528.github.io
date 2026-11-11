@@ -1,0 +1,593 @@
+/* =========================================================
+   Hayden Levinson, portfolio
+   Page styles. The scroll mechanism lives in scrollcraft.css
+   and is left alone; everything here is this page's own.
+
+   Grounds hard-cut from section to section and are taken
+   from the work: bone, Locus navy, vermilion, black, ink.
+   ========================================================= */
+
+:root {
+  --sc-canvas:     #E9E8E2;
+  --sc-surface:    #DCDAD2;
+  --sc-ink:        #111214;
+  --sc-ink-soft:   #494A50;
+  --sc-accent:     #FF5326;
+  --sc-accent-ink: #111214;
+
+  --sc-font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --sc-font-text:    "Geist", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+
+  --sc-shadow-color: 230 25% 8%;
+
+  --navy:  #0A2238;
+  --black: #0C0C0E;
+  --ink:   #111214;
+}
+
+/* ---------- shared ---------- */
+h2 {
+  margin: 0;
+  font-family: var(--sc-font-display);
+  font-stretch: 112%;
+  font-weight: 700;
+  font-size: var(--sc-t-xl);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+figure { margin: 0; }
+figcaption b { font-weight: 500; color: var(--sc-ink); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+.skip {
+  position: absolute; left: -999rem; top: 0; z-index: 100;
+  padding: .75rem 1.1rem; background: var(--ink); color: #F3F1EA;
+}
+.skip:focus { left: 0; }
+
+/* Wall-scale type: the name, the method words, the channel names, the tagline */
+.hero h1,
+.close__name,
+.method__list h3,
+.route__name,
+.bb__line {
+  font-family: var(--sc-font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  line-height: .86;
+  margin: 0;
+}
+
+/* =========================================================
+   1. TITLE WALL
+   ========================================================= */
+.hero {
+  /* one screen tall, but never absurdly so on a very tall window */
+  --hero-h: clamp(34rem, 100svh, 68rem);
+  position: relative;
+  min-height: var(--hero-h);
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  isolation: isolate;
+}
+
+.index {
+  position: relative; z-index: 4;
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: var(--sc-5);
+  padding: var(--sc-5) var(--sc-gutter) 0;
+  font-size: var(--sc-t-sm);
+}
+.index__role { margin: 0; font-weight: 500; }
+.index__links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 var(--sc-5); }
+.index__links a {
+  text-decoration: none;
+  padding-block: .4rem;
+  background: linear-gradient(currentColor, currentColor) 0 calc(100% - .25rem) / 0 1px no-repeat;
+  transition: background-size var(--sc-d-fast) var(--sc-ease-out);
+}
+.index__links a:hover,
+.index__links a:focus-visible { background-size: 100% 1px; }
+
+.hero__copy {
+  position: relative; z-index: 3;
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: var(--sc-6);
+  padding: clamp(2rem, 9svh, 6rem) var(--sc-gutter) clamp(1.5rem, 5svh, 3.5rem);
+}
+.hero h1 { font-size: clamp(3.2rem, 9.2vw, 10.5rem); }
+.hero h1 span { display: block; }
+.hero__lede {
+  order: -1;
+  margin: 0;
+  max-width: 19ch;
+  font-family: var(--sc-font-display);
+  font-weight: 500;
+  font-size: var(--sc-t-xl);
+  line-height: 1.14;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+/* The cluster: real pieces on three planes. It scales as one unit, so the
+   composition holds at any window size. */
+.cluster {
+  position: absolute; right: 0; bottom: 0; z-index: 1;
+  width: min(60vw, calc(var(--hero-h) - 4.5rem));
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+.plane { position: absolute; inset: 0; will-change: transform; }
+.plane img {
+  position: absolute;
+  max-width: none; height: auto;
+  animation: settle 900ms var(--sc-ease-out) both;
+}
+.plane--far img  { animation-delay: 60ms;  box-shadow: var(--sc-e2); filter: saturate(.9) brightness(.96); }
+.plane--mid img  { animation-delay: 180ms; box-shadow: var(--sc-e3); }
+.plane--near img {
+  animation-delay: 320ms;
+  filter: drop-shadow(0 24px 26px hsl(230 30% 8% / .30)) drop-shadow(0 4px 6px hsl(230 30% 8% / .22));
+}
+@keyframes settle {
+  from { opacity: 0; transform: translate3d(0, 26px, 0) scale(.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+.c-banner  { width: 62%; left: 40%; top: 13%; }
+.c-tours   { width: 27%; left: 11%; top: 18%; }
+.c-hiring  { width: 34%; left: 30%; top: 27%; }
+.c-promo   { width: 30%; left: 70%; top: 27%; }
+.c-phone-a { width: 27%; left: 53%; top: 41%; }
+.c-phone-b { width: 23%; left: 80%; top: 51%; }
+
+/* =========================================================
+   2. HOW I WORK
+   The frame for everything after it: four steps, then four cases.
+   ========================================================= */
+.method { padding-block: clamp(4.5rem, 14svh, 9rem) var(--sc-section); }
+.method h2 {
+  max-width: 16ch;
+  font-stretch: 100%;
+  font-weight: 500;
+  font-size: var(--sc-t-2xl);
+  line-height: 1.06;
+  letter-spacing: -0.028em;
+}
+.method__list { list-style: none; margin: clamp(2rem, 5vw, 4rem) 0 0; padding: 0; }
+.method__list li {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--sc-3) clamp(1.5rem, 5vw, 5rem);
+  align-items: baseline;
+  padding-block: clamp(1.25rem, 2.6vw, 2.25rem);
+  border-top: 1px solid var(--sc-hairline-strong);
+}
+.method__list li:last-child { border-bottom: 1px solid var(--sc-hairline-strong); }
+.method__list h3 { font-size: clamp(2.2rem, 6.2vw, 5.8rem); line-height: .9; }
+.method__list p { margin: 0; max-width: 40ch; font-size: var(--sc-t-lg); line-height: 1.4; letter-spacing: -0.012em; }
+
+/* =========================================================
+   THE BRIEF
+   Every case opens the same way: what it is, then problem, move, measure.
+   The move is set largest, because the decision is the thing being shown.
+   ========================================================= */
+.brief__top {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--sc-3) clamp(1.5rem, 5vw, 5rem);
+  align-items: baseline;
+}
+.brief__top h2 { font-size: var(--sc-t-2xl); }
+.brief__kind {
+  margin: 0;
+  max-width: 30ch;
+  font-family: var(--sc-font-display);
+  font-weight: 500;
+  font-size: var(--sc-t-lg);
+  line-height: 1.22;
+  letter-spacing: -0.018em;
+}
+.brief__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 5fr) minmax(0, 3fr);
+  gap: var(--sc-6) clamp(1.25rem, 3.4vw, 3.5rem);
+  margin: clamp(2rem, 5vw, 4rem) 0 0;
+}
+.brief__cell { border-top: 1px solid var(--sc-hairline-strong); padding-top: var(--sc-4); }
+.brief__cell dt { margin-bottom: var(--sc-3); font-size: var(--sc-t-sm); font-weight: 500; color: var(--sc-ink-soft); }
+.brief__cell dd { margin: 0; max-width: 34ch; line-height: 1.5; }
+.brief__cell--move dd {
+  max-width: 23ch;
+  font-family: var(--sc-font-display);
+  font-weight: 500;
+  font-size: var(--sc-t-xl);
+  line-height: 1.12;
+  letter-spacing: -0.024em;
+  text-wrap: balance;
+}
+
+/* =========================================================
+   3. LOCUS ROBOTICS
+   ========================================================= */
+.locus, .locus-brief {
+  background: var(--navy);
+  --sc-ink: #F3F1EA; --sc-ink-soft: #A7B6C6;
+  --sc-hairline-strong: rgb(243 241 234 / .24);
+  color: var(--sc-ink);
+}
+.locus-brief { padding-block: var(--sc-section) clamp(1.5rem, 4vw, 3rem); }
+.locus {
+  /* 0 at the start of the pin, 1 just before it lets go */
+  --t: clamp(0, calc((var(--sc-p, 0) - 0.05) / 0.82), 1);
+}
+/* One column pinned to the stage width: the rail is wider than the screen on
+   purpose, and must not stretch the header out with it. */
+.locus__stage { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+
+.locus__head {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: var(--sc-6);
+  padding: clamp(1.25rem, 5svh, 3.25rem) var(--sc-gutter) 0;
+}
+.locus__title {
+  margin: 0 0 1rem;
+  max-width: 16ch;
+  font-family: var(--sc-font-display);
+  font-weight: 500;
+  font-size: var(--sc-t-xl);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+}
+
+/* The rate wheel. One digit window; the strip 3 4 5 6 7 is rolled by the act's
+   own progress, so it runs forwards and backwards with the hand. */
+.rate { display: flex; flex-direction: row-reverse; align-items: flex-end; gap: var(--sc-4); }
+.rate__num {
+  margin: 0;
+  display: flex; align-items: flex-start;
+  height: 1em;
+  font-family: var(--sc-font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: clamp(5.5rem, 15vw, 14rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.rate__win { display: block; height: 1em; overflow: clip; }
+.rate__wheel {
+  display: flex; flex-direction: column;
+  transform: translate3d(0, calc(var(--k, var(--t) * 4) * -1em), 0);
+  will-change: transform;
+}
+.rate__wheel b { display: block; height: 1em; line-height: 1; font-weight: inherit; text-align: center; }
+.rate__pct { font-size: .5em; line-height: 1; margin: .14em 0 0 .06em; color: var(--sc-accent); }
+.rate__cap {
+  margin: 0 0 1rem;
+  max-width: 13ch;
+  font-size: var(--sc-t-sm);
+  line-height: 1.35;
+  color: var(--sc-ink-soft);
+  text-align: right;
+}
+
+.locus__rail {
+  --h: clamp(13rem, 52svh, 36rem);
+  width: max-content;
+  height: 100%;
+  align-items: center;
+  gap: clamp(1rem, 2.6vw, 2.75rem);
+  padding-inline: var(--sc-gutter);
+}
+.piece { flex: none; }
+.piece img {
+  height: var(--h); width: auto; max-width: none;
+  border-radius: 3px;
+  box-shadow: 0 26px 50px -20px rgb(0 0 0 / .6);
+}
+.piece--stack { display: grid; row-gap: calc(var(--h) * .04); }
+.piece--stack img { height: calc(var(--h) * .48); }
+.piece figcaption { margin-top: .8rem; font-size: var(--sc-t-sm); color: var(--sc-ink-soft); }
+.piece--stack figcaption { margin-top: calc(.8rem - var(--h) * .04); }
+.locus__note {
+  flex: none;
+  margin: 0;
+  width: min(21rem, 72vw);
+  font-family: var(--sc-font-display);
+  font-weight: 500;
+  font-size: var(--sc-t-lg);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* =========================================================
+   4. CREATORS
+   ========================================================= */
+.creators {
+  background: var(--sc-accent);
+  --sc-ink: #111214; --sc-ink-soft: #111214;
+  --sc-hairline-strong: rgb(17 18 20 / .4);
+  color: var(--sc-ink);
+  padding-block: var(--sc-section);
+  overflow: clip;
+}
+.creators__big {
+  margin: clamp(3rem, 8vw, 7rem) 0 0;
+  max-width: 17ch;
+  font-family: var(--sc-font-display);
+  font-weight: 500;
+  font-size: var(--sc-t-xl);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+}
+.creators__big b {
+  display: block;
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: clamp(5.5rem, 17vw, 16rem);
+  line-height: .86;
+  letter-spacing: -0.045em;
+  margin-bottom: .08em;
+}
+
+.phones {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(.9rem, 2.6vw, 2.75rem);
+  align-items: start;
+  margin-top: clamp(2.5rem, 6vw, 5rem);
+}
+/* The right-hand pair climbs up beside the big number; the far one climbs
+   furthest because nothing is in its way. */
+.phone:nth-child(2) { margin-top: 16%; }
+.phone:nth-child(3) { margin-top: calc(-1 * clamp(2rem, 7vw, 6.5rem)); }
+.phone:nth-child(4) { margin-top: calc(-1 * clamp(5rem, 18vw, 17rem)); }
+.phone img {
+  width: 100%; height: auto;
+  filter: drop-shadow(0 30px 32px rgb(70 12 0 / .36)) drop-shadow(0 6px 8px rgb(70 12 0 / .24));
+}
+.phone figcaption { margin-top: var(--sc-4); font-size: var(--sc-t-sm); line-height: 1.4; }
+
+/* =========================================================
+   5. DANNY WAY
+   A plan, so it is drawn as a route: where the audience is now, where it
+   goes first, where it goes next, and what is left out.
+   ========================================================= */
+.danny { padding-block: var(--sc-section); }
+.route {
+  list-style: none; padding: 0;
+  margin: clamp(3rem, 7vw, 6rem) 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.route__stop {
+  position: relative;
+  display: flex; flex-direction: column;
+  padding: var(--sc-5) clamp(1rem, 2.4vw, 2.25rem) 0 0;
+  border-top: 2px solid var(--sc-ink);
+}
+/* a stop on the line */
+.route__stop::before {
+  content: "";
+  position: absolute; left: 0; top: -8px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--sc-canvas);
+  border: 2px solid var(--sc-ink);
+}
+.route__stop--now::before { background: var(--sc-ink); }
+/* the line stops before the platforms that were left out */
+.route__stop--out { border-top: 2px dashed color-mix(in oklab, var(--sc-ink) 30%, transparent); }
+.route__stop--out::before { display: none; }
+.route__when { font-size: var(--sc-t-sm); font-weight: 500; color: var(--sc-ink-soft); }
+.route__name {
+  display: block;
+  margin-top: var(--sc-3);
+  font-size: clamp(1.3rem, 2.25vw, 2.2rem);
+  line-height: .96;
+  letter-spacing: -0.03em;
+}
+.route__name s { text-decoration-thickness: .09em; text-decoration-color: var(--sc-accent); }
+.route__stop--out .route__name { color: color-mix(in oklab, var(--sc-ink) 55%, var(--sc-canvas)); }
+.route__why { margin-top: var(--sc-4); max-width: 27ch; font-size: var(--sc-t-sm); line-height: 1.5; color: var(--sc-ink-soft); }
+
+/* =========================================================
+   6. BANDAGE BUDDIES
+   ========================================================= */
+.bb, .bb-brief {
+  background: var(--black);
+  --sc-ink: #F4F1EA; --sc-ink-soft: #B5B1A8;
+  --sc-hairline-strong: rgb(244 241 234 / .22);
+  color: var(--sc-ink);
+}
+.bb-brief { padding-block: var(--sc-section) 0; }
+.bb__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 5rem);
+  padding-inline: var(--sc-gutter);
+}
+.bb__copy { max-width: 38rem; }
+.bb__line span { color: var(--sc-accent); }
+.bb__line { font-size: clamp(2.3rem, 5.4vw, 5.4rem); line-height: .9; max-width: 11ch; }
+.bb__label { margin: var(--sc-5) 0 0; font-size: var(--sc-t-base); color: var(--sc-ink-soft); }
+
+/* The storefront holds still as a window while the page scrolls inside it. */
+.bb__show {
+  position: relative;
+  height: min(80svh, 46rem);
+  aspect-ratio: 762 / 1180;
+  margin-right: clamp(0rem, 3vw, 4rem);
+}
+.bb__frame {
+  position: absolute; inset: 0;
+  container-type: size;
+  overflow: clip;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 40px 80px -30px rgb(0 0 0 / .85), 0 0 0 1px rgb(255 255 255 / .09);
+}
+.bb__page {
+  width: 100%; height: auto; max-width: none;
+  transform: translate3d(0, calc(var(--sc-p, 0) * (100cqh - 100%)), 0);
+  will-change: transform;
+}
+/* The characters stand on the frame's corner, in front of it. */
+.bb__crew {
+  position: absolute; left: -46%; bottom: -4%;
+  width: 86%; height: auto; max-width: none;
+  filter: drop-shadow(0 22px 28px rgb(0 0 0 / .6));
+}
+
+/* =========================================================
+   7. PACKAGING
+   ========================================================= */
+.pack { padding-block: var(--sc-section); overflow: clip; }
+.pack__row {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: end;
+  margin-top: clamp(2rem, 6vw, 5rem);
+}
+.pack__item--bewell { padding-bottom: clamp(0rem, 9vw, 8rem); }
+.pack__obj img { width: 100%; height: auto; }
+.pack__item--bewell .pack__obj img { filter: drop-shadow(0 26px 30px hsl(28 25% 18% / .30)); }
+.pack figcaption { margin-top: var(--sc-5); max-width: 36ch; font-size: var(--sc-t-sm); color: var(--sc-ink-soft); }
+
+/* =========================================================
+   8. CLOSE
+   ========================================================= */
+.close {
+  background: var(--ink);
+  --sc-ink: #F3F1EA; --sc-ink-soft: #A9A7A0;
+  color: var(--sc-ink);
+}
+.close { padding-block: var(--sc-section) var(--sc-5); overflow: clip; }
+.close__tools { margin: 0; max-width: 64ch; font-size: var(--sc-t-sm); color: var(--sc-ink-soft); }
+.close__line { margin: var(--sc-4) 0 0; max-width: 34ch; font-size: var(--sc-t-lg); line-height: 1.35; letter-spacing: -0.012em; }
+.close__name { margin-top: clamp(2.5rem, 7vw, 6rem); font-size: clamp(3.2rem, 12.4vw, 15rem); line-height: .84; }
+.close__name span { display: block; }
+.close__foot {
+  display: flex; justify-content: space-between; gap: var(--sc-5);
+  margin: var(--sc-6) 0 0;
+  font-size: var(--sc-t-xs);
+  color: var(--sc-ink-soft);
+}
+
+/* =========================================================
+   SMALLER SCREENS
+   The phone layout is its own composition, not the desktop one shrunk.
+   ========================================================= */
+@media (max-width: 860px) {
+  .bb__stage {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: var(--sc-5);
+    padding-block: var(--sc-5);
+  }
+  .bb__show { height: min(44svh, calc(100svh - 23rem)); justify-self: end; margin-right: 0; }
+  /* start the characters at the page gutter, whatever width the frame lands on */
+  .bb__crew { left: calc(100% - 100vw + 2 * var(--sc-gutter)); width: 100%; bottom: -3%; }
+  .bb__line { font-size: clamp(2.1rem, 11vw, 3.6rem); }
+  .bb__label { margin-top: var(--sc-3); font-size: var(--sc-t-sm); }
+
+  /* the route turns to run down the page */
+  .route { grid-template-columns: minmax(0, 1fr); margin-left: 7px; }
+  .route__stop {
+    padding: 0 0 var(--sc-6) var(--sc-5);
+    border-top: 0;
+    border-left: 2px solid var(--sc-ink);
+  }
+  .route__stop::before { left: -8px; top: 0; }
+  .route__stop--out { border-top: 0; border-left: 2px dashed color-mix(in oklab, var(--sc-ink) 30%, transparent); padding-bottom: 0; }
+  .route__why { max-width: 36ch; }
+}
+
+@media (max-width: 760px) {
+  .hero { min-height: 0; }
+  .index { flex-direction: column; gap: var(--sc-1); }
+  .index__links { justify-content: flex-start; gap: 0 var(--sc-4); }
+  .index__links a { padding-block: .5rem; }
+
+  .hero__copy { order: 1; flex: none; gap: var(--sc-5); padding-top: var(--sc-6); padding-bottom: 0; }
+  .hero h1 { font-size: clamp(2.7rem, 14.2vw, 5.4rem); }
+  .hero__lede { max-width: 22ch; }
+
+  .cluster { order: 2; position: relative; width: 100%; aspect-ratio: 1 / .98; margin-top: var(--sc-5); }
+  .c-banner  { width: 84%; left: 24%; top: 2%; }
+  .c-tours   { width: 33%; left: 4%;  top: 12%; }
+  .c-hiring  { width: 42%; left: 22%; top: 22%; }
+  .c-promo   { width: 38%; left: 66%; top: 24%; }
+  .c-phone-a { width: 35%; left: 47%; top: 34%; }
+  .c-phone-b { width: 29%; left: 76%; top: 45%; }
+
+  .brief__top { grid-template-columns: minmax(0, 1fr); }
+  .brief__grid { grid-template-columns: minmax(0, 1fr); gap: var(--sc-5); }
+  .brief__cell--move dd { max-width: 20ch; }
+
+  .locus__head { flex-direction: column; align-items: flex-start; gap: var(--sc-2); }
+  .locus__title { margin-bottom: 0; max-width: none; font-size: var(--sc-t-lg); }
+  .rate { flex-direction: row; }
+  .rate__num { font-size: clamp(4.6rem, 27vw, 7.5rem); }
+  .rate__cap { text-align: left; margin-bottom: .7rem; }
+  .locus__rail { --h: clamp(11rem, 46svh, 27rem); }
+
+  .phones { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sc-6) var(--sc-5); }
+  .phone:nth-child(2) { margin-top: 22%; }
+  .phone:nth-child(3) { margin-top: -14%; }
+  .phone:nth-child(4) { margin-top: 8%; }
+
+  .pack__row { grid-template-columns: minmax(0, 1fr); gap: var(--sc-7); }
+  .pack__item--bewell { padding-bottom: 0; width: 84%; margin-left: auto; }
+
+  .method__list li { grid-template-columns: minmax(0, 1fr); }
+  .close__foot { flex-wrap: wrap; }
+}
+
+/* Short, wide windows: keep the Locus header from eating the rail */
+@media (max-height: 620px) and (min-width: 761px) {
+  .rate__num { font-size: clamp(4.5rem, 22svh, 9rem); }
+  .locus__rail { --h: clamp(11rem, 46svh, 30rem); }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   Nothing is pinned and nothing travels; every piece stays reachable.
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .plane img { animation: none; }
+
+  .locus, .bb { height: auto !important; }
+  .locus__stage, .bb__stage { position: static; height: auto; }
+  /* The rail becomes the sideways scroll region, not the whole stage, so the
+     heading and the number stay put while the pieces are swiped through. */
+  .locus .locus__stage { overflow: visible; scroll-snap-type: none; padding-bottom: var(--sc-7); }
+  .locus__rail {
+    width: auto; height: auto;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    padding-block: var(--sc-6) var(--sc-4);
+  }
+  .locus .locus__rail > * { scroll-snap-align: start; scroll-margin-left: var(--sc-gutter); }
+  .rate__wheel { transform: translate3d(0, -4em, 0) !important; }
+
+  .bb__stage { padding-block: var(--sc-section); }
+  .bb__page { transform: none; }
+  .bb__frame { overflow-y: auto; }
+}
+
+@media print {
+  .sc-grain, .skip, .index__links { display: none; }
+}
