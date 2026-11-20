@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-sc">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<title>Hayden Levinson | Social media strategy and content</title>
-<meta name="description" content="Social media specialist. Six years of building the strategy, making the content and reading the numbers.">
+<title>Hayden Levinson | Social media strategy, content and product design</title>
+<meta name="description" content="Hayden Levinson's portfolio: social media strategy, content and product design, including setting up social media at Locus Robotics.">
 
-<meta property="og:title" content="Hayden Levinson | Social media strategy and content">
-<meta property="og:description" content="Six years of building the strategy, making the content and reading the numbers.">
+<meta property="og:title" content="Hayden Levinson | Social media strategy, content and product design">
+<meta property="og:description" content="Social media strategy, content and product design, including setting up social media at Locus Robotics.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hayden14528.github.io/">
 <meta property="og:image" content="https://hayden14528.github.io/assets/img/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Hayden Levinson, social media portfolio.">
+<meta property="og:image:alt" content="Hayden Levinson, social media and product design portfolio.">
 <meta name="twitter:card" content="summary_large_image">
 
 <meta name="theme-color" content="#E9E8E2">
@@ -27,12 +27,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Geist:wght@300..700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/scrollcraft.css?v=1">
-<link rel="stylesheet" href="css/site.css?v=4">
-<noscript><style>
-  [data-sc-in], [data-sc-stagger] > * { opacity: 1 !important; transform: none !important; }
-  .locus__stage { overflow-x: auto; }
-  .bb__frame { overflow-y: auto; }
-</style></noscript>
+<link rel="stylesheet" href="css/site.css?v=8">
+<script>
+  /* The page starts in static mode (class "no-sc" on <html>: everything is
+     visible and nothing is pinned, see site.css). This switches it off straight
+     away, and back on if the scroll engine has not started by the time the page
+     has finished loading, so a blocked or failed script never hides content. */
+  (function (d) {
+    d.classList.remove('no-sc');
+    addEventListener('load', function () {
+      if (d.classList.contains('sc-ready')) return;
+      d.classList.add('no-sc');
+      var r = document.querySelectorAll('.locus__rail, .bb__frame');
+      for (var i = 0; i < r.length; i++) r[i].tabIndex = 0;
+    });
+  })(document.documentElement);
+</script>
 </head>
 
 <body id="top">
@@ -46,12 +56,12 @@
 <section class="hero" data-hero>
 
   <header class="index">
-    <p class="index__role">Social media strategy and content</p>
+    <p class="index__role">Social media strategy, content and product design</p>
     <nav class="index__links" aria-label="Page index">
       <a href="#locus">Locus Robotics</a>
       <a href="#creators">Creators</a>
       <a href="#bandage-buddies">Bandage Buddies</a>
-      <a href="#packaging">Packaging</a>
+      <a href="#product-design">Product design</a>
     </nav>
   </header>
 
@@ -67,14 +77,22 @@
       <img class="c-promo" src="assets/img/cut/locus-blog-promo.webp" width="1300" height="1300" alt="">
     </div>
     <div class="plane plane--near" data-depth="-0.11" data-lean="26">
-      <img class="c-phone-a" src="assets/img/cut/phone-espinosa.webp" width="514" height="998" alt="">
-      <img class="c-phone-b" src="assets/img/cut/phone-insights.webp" width="514" height="998" alt="">
+      <img class="c-burn" src="assets/img/cut/burn-buddy-2.webp" width="1796" height="1208" alt="">
+      <img class="c-well" src="assets/img/cut/bewell.webp" width="1384" height="960" alt="">
     </div>
   </div>
 
   <div class="hero__copy">
     <h1>Hayden <span>Levinson</span></h1>
-    <p class="hero__lede">Six years of building the strategy, making the content and reading the numbers.</p>
+    <div class="hero__top">
+      <p class="hero__lede">I've worked in social media for six years. I plan it, make the content and keep track of the numbers.</p>
+      <ul class="hero__proof">
+        <li><a href="#locus"><b>Locus Robotics.</b> I set up their social media. Engagement went from about 3% to 7% in a year.</a></li>
+        <li><a href="#creators"><b>Creators and artists.</b> I help grow accounts with 5M+ followers between them.</a></li>
+        <li><a href="#bandage-buddies"><b>Bandage Buddies.</b> Branding and a Shopify store.</a></li>
+        <li><a href="#product-design"><b>Product design.</b> Packaging for sunscreen and cold brew.</a></li>
+      </ul>
+    </div>
   </div>
 
 </section>
@@ -84,22 +102,52 @@
   <div class="sc-wrap brief">
     <div class="brief__top" data-sc-in>
       <h2>Locus Robotics</h2>
-      <p class="brief__kind">Content strategy for a B2B robotics brand on five platforms.</p>
+      <p class="brief__kind">Locus had never had a social media manager, so I set up their social media and the strategy for it.</p>
     </div>
     <dl class="brief__grid" data-sc-in data-sc-stagger="70">
       <div class="brief__cell">
-        <dt>Problem</dt>
-        <dd>Engagement sat around 3% across LinkedIn, Instagram, Facebook, X and YouTube.</dd>
+        <dt>The problem</dt>
+        <dd>Nobody was running social and there wasn't a real strategy. The posts didn't have a consistent look, and engagement was around 3% across LinkedIn, Instagram, Facebook, X and YouTube.</dd>
       </div>
       <div class="brief__cell brief__cell--move">
-        <dt>Move</dt>
-        <dd>Audit every post by format, topic, day, copy length and cadence. Rebuild the mix around what the data backs. A/B test the rest.</dd>
+        <dt>What I did</dt>
+        <dd>I gave everything one consistent look, made content to fit each platform, and used the data to decide what to post.</dd>
       </div>
       <div class="brief__cell">
-        <dt>Measure</dt>
-        <dd>Engagement rate. About 3% to 7%, reported post by post to executive leadership.</dd>
+        <dt>The result</dt>
+        <dd>Engagement went from about 3% to 7% in a year. I reported the numbers to executive leadership.</dd>
       </div>
     </dl>
+
+    <div class="think">
+      <h3 class="think__title" data-sc-in>How I went about it</h3>
+      <ol class="think__list" data-sc-in data-sc-stagger="60">
+        <li>
+          <h4 class="think__q">Where I started</h4>
+          <p class="think__a">I went back through everything that had already been posted and looked at how each post did by format, topic, day, copy length and how often we posted. That showed me what was working.</p>
+        </li>
+        <li>
+          <h4 class="think__q">Look and feel</h4>
+          <p class="think__a">I created one standard look for the posts, so everything looked like it came from the same brand.</p>
+        </li>
+        <li>
+          <h4 class="think__q">Each platform</h4>
+          <p class="think__a">I adjusted the content for each platform instead of posting the same thing on all five.</p>
+        </li>
+        <li>
+          <h4 class="think__q">Making the content</h4>
+          <p class="think__a">I filmed the video, took the photos and designed the graphics myself.</p>
+        </li>
+        <li>
+          <h4 class="think__q">Reporting</h4>
+          <p class="think__a">I put together reports for executive leadership that showed how each post did. When I wasn't sure about something, I A/B tested it.</p>
+        </li>
+        <li>
+          <h4 class="think__q">Staying on brand</h4>
+          <p class="think__a">I built AI agents that check posts against the brand guidelines before they go out. I also used Claude to help go through all the post data.</p>
+        </li>
+      </ol>
+    </div>
   </div>
 </section>
 
@@ -108,7 +156,7 @@
   <div class="locus__stage" data-sc-stage>
 
     <header class="locus__head">
-      <p class="locus__title">The content mix, one piece per job.</p>
+      <p class="locus__title">Some of the posts I made for Locus.</p>
 
       <div class="rate">
         <p class="rate__num" aria-hidden="true">
@@ -146,7 +194,7 @@
              alt="Automation Advantage Tour invitation for Locus Park, Boston, with the agenda and a QR code.">
         <figcaption>Field events</figcaption>
       </figure>
-      <p class="locus__note">Planned, designed and produced by me. AI agents I built checked each piece against the brand guidelines before it went out.</p>
+      <p class="locus__note">I planned, designed and made all of these. AI agents I built checked each one against the brand guidelines before it went out.</p>
     </div>
 
   </div>
@@ -159,20 +207,20 @@
     <div class="brief">
       <div class="brief__top" data-sc-in>
         <h2>Creators and artists</h2>
-        <p class="brief__kind">Growth strategy for creator and artist accounts.</p>
+        <p class="brief__kind">I build and grow social pages for creators and artists. I help with strategy, and I film and photograph content for them.</p>
       </div>
       <dl class="brief__grid" data-sc-in data-sc-stagger="70">
         <div class="brief__cell">
-          <dt>Problem</dt>
-          <dd>Feed posts mostly reach people who already follow. Growth has to come from people who don't.</dd>
+          <dt>The problem</dt>
+          <dd>Regular posts mostly get shown to people who already follow the account, so they don't bring in many new followers.</dd>
         </div>
         <div class="brief__cell brief__cell--move">
-          <dt>Move</dt>
-          <dd>Lead with Reels, the format Instagram shows to non-followers. Use Stories to keep the existing audience close.</dd>
+          <dt>What I did</dt>
+          <dd>I focused on Reels, because Instagram shows them to people who don't follow yet, and used Stories to keep current followers engaged.</dd>
         </div>
         <div class="brief__cell">
-          <dt>Measure</dt>
-          <dd>Non-follower reach. One month: 891,874 views, 64% from Reels, 81% from people who didn't follow. Reach up 169.9%.</dd>
+          <dt>The result</dt>
+          <dd>In one month, one account got 891,874 views, and 81% were from people who didn't follow it.</dd>
         </div>
       </dl>
     </div>
@@ -195,11 +243,40 @@
              alt="Instagram profile for KidWiseman showing 122 thousand followers.">
         <figcaption><b>KidWiseman.</b> 122K followers.</figcaption>
       </figure>
-      <figure class="phone" data-sc-parallax="0.8">
+    </div>
+
+    <!-- the thinking: one real month of insights, read line by line -->
+    <div class="read">
+      <figure class="read__phone" data-sc-in>
         <img src="assets/img/cut/phone-insights.webp" width="514" height="998" loading="lazy"
-             alt="Instagram insights for one month: 891,874 views, 81.4 percent from non-followers, 195,714 accounts reached, up 169.9 percent, with Reels at 64.4 percent of views.">
-        <figcaption><b>One month of insights.</b> The numbers behind the measure above.</figcaption>
+             alt="Instagram insights for May 1 to May 30: 891,874 views, 8.2 percent from ads, 81.4 percent from non-followers, 195,714 accounts reached, up 169.9 percent. By content type: Reels 64.4 percent, Stories 34.9 percent, Posts 0.6 percent.">
       </figure>
+      <div class="read__body">
+        <h3 class="read__title" data-sc-in>What one month of numbers showed</h3>
+        <p class="read__intro" data-sc-in>This is the insights screen for one account from May 1 to May 30, and what I look at on it.</p>
+        <ol class="read__list" data-sc-in data-sc-stagger="60">
+          <li>
+            <p class="read__num">0.6%</p>
+            <p class="read__say"><b>of views came from regular posts.</b> They mostly reach people who already follow, so they don't help much with growth.</p>
+          </li>
+          <li>
+            <p class="read__num">64.4%</p>
+            <p class="read__say"><b>came from Reels.</b> Reels get shown to people who don't follow the account, so that's where I put most of the effort.</p>
+          </li>
+          <li>
+            <p class="read__num">34.9%</p>
+            <p class="read__say"><b>came from Stories.</b> Stories mostly reach existing followers, so I use them to keep people engaged.</p>
+          </li>
+          <li>
+            <p class="read__num">8.2%</p>
+            <p class="read__say"><b>came from ads.</b> Most of the views were organic.</p>
+          </li>
+          <li>
+            <p class="read__num">81.4%</p>
+            <p class="read__say"><b>came from people who weren't following.</b> The account reached 195,714 accounts, up 169.9%.</p>
+          </li>
+        </ol>
+      </div>
     </div>
 
   </div>
@@ -210,20 +287,20 @@
   <div class="sc-wrap brief">
     <div class="brief__top" data-sc-in>
       <h2>Bandage Buddies</h2>
-      <p class="brief__kind">Brand and launch strategy for a first-aid brand in action sports.</p>
+      <p class="brief__kind">A first-aid brand for kids who are into action sports. I worked on the branding and built the store on Shopify.</p>
     </div>
     <dl class="brief__grid" data-sc-in data-sc-stagger="70">
       <div class="brief__cell">
-        <dt>Problem</dt>
-        <dd>Every kids' bandage is a cartoon license or a pretty print. Nothing for kids who skate, ride and fall.</dd>
+        <dt>The problem</dt>
+        <dd>Most kids' bandages have cartoon characters or cute patterns. There wasn't anything for kids who skate, bike and get scraped up.</dd>
       </div>
       <div class="brief__cell brief__cell--move">
-        <dt>Move</dt>
-        <dd>Put the brand inside action sports culture, and give the characters a job: help a kid be tough and bounce back.</dd>
+        <dt>What I did</dt>
+        <dd>I built the brand around action sports and gave the characters a purpose: helping kids feel tough and get back up after a fall.</dd>
       </div>
       <div class="brief__cell">
-        <dt>Built</dt>
-        <dd>The positioning, the brand and the storefront, all hanging on one line.</dd>
+        <dt>What I built</dt>
+        <dd>The brand positioning, the tagline and the Shopify store.</dd>
       </div>
     </dl>
   </div>
@@ -234,7 +311,6 @@
 
     <div class="bb__copy">
       <p class="bb__line">For kids who earn <span>their scrapes.</span></p>
-      <p class="bb__label">The line, and the storefront built around it.</p>
     </div>
 
     <div class="bb__show">
@@ -249,10 +325,10 @@
   </div>
 </section>
 
-<!-- ============ 5. PACKAGING ============ -->
-<section class="pack" id="packaging" data-sc-act="flow">
+<!-- ============ 5. PRODUCT DESIGN ============ -->
+<section class="pack" id="product-design" data-sc-act="flow">
   <div class="sc-wrap">
-    <h2 data-sc-in>Packaging and brand design</h2>
+    <h2 data-sc-in>Product design</h2>
 
     <div class="pack__row">
       <figure class="pack__item pack__item--burn" data-sc-in>
@@ -260,7 +336,7 @@
           <img src="assets/img/cut/burn-buddy-2.webp" width="1796" height="1208" loading="lazy"
                alt="Burn Buddy sunscreen spray in four SPF variants, 15 in red, 30 in orange, 50 in black and 100 in yellow, each with a flame mascot.">
         </div>
-        <figcaption><b>Burn Buddy.</b> Sunscreen range. Mascot, logotype and a color system for four SPFs.</figcaption>
+        <figcaption class="pack__name"><b>Burn Buddy.</b> Sunscreen range.</figcaption>
       </figure>
 
       <figure class="pack__item pack__item--bewell" data-sc-in>
@@ -268,7 +344,7 @@
           <img src="assets/img/cut/bewell.webp" width="1384" height="960" loading="lazy"
                alt="BE WELL Supercharged Coffee can for Colombian Cold Brew beside its flat label artwork.">
         </div>
-        <figcaption><b>BE WELL.</b> Cold brew can. Full wrap, dieline and typography.</figcaption>
+        <figcaption class="pack__name"><b>BE WELL.</b> Cold brew can.</figcaption>
       </figure>
     </div>
   </div>
@@ -280,13 +356,13 @@
 <footer class="close">
   <div class="sc-wrap">
     <p class="close__tools">Sprout Social, Meta Ads, Google Ads, LinkedIn Analytics, Premiere Pro, After Effects, Photoshop, Illustrator, InDesign, Shopify, WordPress, ChatGPT and Claude.</p>
-    <p class="close__line">Social media specialist. My résumé and contact details are with my application.</p>
+    <p class="close__line">I'm a social media specialist. I started out building Shopify sites, moved into growing social accounts, and then set up social media at Locus Robotics. My résumé and contact details are with my application.</p>
     <p class="close__name" aria-hidden="true">Hayden <span>Levinson</span></p>
     <p class="close__foot"><span>© <span id="year">2026</span> Hayden Levinson</span> <a href="#top">Back to top</a></p>
   </div>
 </footer>
 
 <script src="js/scrollcraft.js?v=1"></script>
-<script src="js/site.js?v=2"></script>
+<script src="js/site.js?v=3"></script>
 </body>
 </html>

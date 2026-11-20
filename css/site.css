@@ -74,7 +74,7 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
   min-height: var(--hero-h);
   display: flex;
   flex-direction: column;
-  overflow: clip;
+  overflow: hidden; overflow: clip;   /* hidden is the fallback where clip is unknown */
   isolation: isolate;
 }
 
@@ -105,10 +105,10 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
 }
 .hero h1 { font-size: clamp(3.2rem, 9.2vw, 10.5rem); }
 .hero h1 span { display: block; }
+.hero__top { order: -1; }
 .hero__lede {
-  order: -1;
   margin: 0;
-  max-width: 19ch;
+  max-width: 25ch;
   font-family: var(--sc-font-display);
   font-weight: 500;
   font-size: var(--sc-t-xl);
@@ -116,6 +116,19 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
   letter-spacing: -0.022em;
   text-wrap: balance;
 }
+/* The four things on this page, each with its one fact. Plain lines, not tiles. */
+.hero__proof {
+  list-style: none; padding: 0;
+  margin: clamp(1.1rem, 2.6svh, 2rem) 0 0;
+  max-width: min(25rem, 34vw);   /* stays clear of the work beside it */
+  font-size: var(--sc-t-sm);
+  line-height: 1.35;
+}
+.hero__proof li { border-top: 1px solid var(--sc-hairline-strong); }
+.hero__proof li:last-child { border-bottom: 1px solid var(--sc-hairline-strong); }
+.hero__proof a { display: block; padding-block: .5rem; text-decoration: none; color: var(--sc-ink-soft); }
+.hero__proof b { font-weight: 500; color: var(--sc-ink); }
+.hero__proof a:hover b, .hero__proof a:focus-visible b { text-decoration: underline; text-underline-offset: .2em; }
 
 /* The cluster: real pieces on three planes. It scales as one unit, so the
    composition holds at any window size. */
@@ -146,8 +159,8 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
 .c-tours   { width: 27%; left: 11%; top: 18%; }
 .c-hiring  { width: 34%; left: 30%; top: 27%; }
 .c-promo   { width: 30%; left: 70%; top: 27%; }
-.c-phone-a { width: 27%; left: 53%; top: 41%; }
-.c-phone-b { width: 23%; left: 80%; top: 51%; }
+.c-burn    { width: 50%; left: 44%; top: 49%; }
+.c-well    { width: 32%; left: 66%; top: 78%; }
 
 /* =========================================================
    THE BRIEF
@@ -190,7 +203,41 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
 }
 
 /* =========================================================
-   3. LOCUS ROBOTICS
+   THE THINKING
+   Under a brief: the questions asked on the way to the move, and the answer
+   to each. The question sits on the left in the heading column, the answer
+   on the right, so the two blocks read as one piece.
+   ========================================================= */
+.think { margin-top: clamp(2.75rem, 6.5vw, 5.5rem); }
+.think__title {
+  margin: 0 0 var(--sc-4);
+  font-family: var(--sc-font-text);
+  font-size: var(--sc-t-sm); font-weight: 500; line-height: 1.3; letter-spacing: 0;
+  color: var(--sc-ink-soft);
+}
+.think__list { list-style: none; margin: 0; padding: 0; }
+.think__list li {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--sc-2) clamp(1.5rem, 5vw, 5rem);
+  align-items: baseline;
+  padding-block: clamp(1rem, 1.9vw, 1.5rem);
+  border-top: 1px solid var(--sc-hairline-strong);
+}
+.think__q {
+  margin: 0;
+  max-width: 24ch;
+  font-family: var(--sc-font-display);
+  font-weight: 500;
+  font-size: var(--sc-t-lg);
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+.think__a { margin: 0; max-width: 46ch; line-height: 1.5; }
+
+/* =========================================================
+   2. LOCUS ROBOTICS
    ========================================================= */
 .locus, .locus-brief {
   background: var(--navy);
@@ -198,7 +245,7 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
   --sc-hairline-strong: rgb(243 241 234 / .24);
   color: var(--sc-ink);
 }
-.locus-brief { padding-block: var(--sc-section) clamp(1.5rem, 4vw, 3rem); }
+.locus-brief { padding-block: var(--sc-section) clamp(2.5rem, 6vw, 5rem); }
 .locus {
   /* 0 at the start of the pin, 1 just before it lets go */
   --t: clamp(0, calc((var(--sc-p, 0) - 0.05) / 0.82), 1);
@@ -237,7 +284,7 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
   letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
 }
-.rate__win { display: block; height: 1em; overflow: clip; }
+.rate__win { display: block; height: 1em; overflow: hidden; overflow: clip; }
 .rate__wheel {
   display: flex; flex-direction: column;
   transform: translate3d(0, calc(var(--k, var(--t) * 4) * -1em), 0);
@@ -284,7 +331,7 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
 }
 
 /* =========================================================
-   4. CREATORS
+   3. CREATORS
    ========================================================= */
 .creators {
   background: var(--sc-accent);
@@ -292,7 +339,7 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
   --sc-hairline-strong: rgb(17 18 20 / .4);
   color: var(--sc-ink);
   padding-block: var(--sc-section);
-  overflow: clip;
+  overflow: hidden; overflow: clip;
 }
 .creators__big {
   margin: clamp(3rem, 8vw, 7rem) 0 0;
@@ -315,24 +362,71 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
 
 .phones {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(.9rem, 2.6vw, 2.75rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 3.6vw, 4rem);
   align-items: start;
-  margin-top: clamp(2.5rem, 6vw, 5rem);
+  max-width: 62rem;
+  margin: clamp(2.5rem, 6vw, 5rem) 0 0 auto;
 }
-/* The right-hand pair climbs up beside the big number; the far one climbs
-   furthest because nothing is in its way. */
-.phone:nth-child(2) { margin-top: 16%; }
-.phone:nth-child(3) { margin-top: calc(-1 * clamp(2rem, 7vw, 6.5rem)); }
-.phone:nth-child(4) { margin-top: calc(-1 * clamp(5rem, 18vw, 17rem)); }
+/* The far one climbs up beside the big number, because nothing is in its way. */
+.phone:nth-child(2) { margin-top: 15%; }
+.phone:nth-child(3) { margin-top: calc(-1 * clamp(4rem, 15vw, 14rem)); }
 .phone img {
   width: 100%; height: auto;
   filter: drop-shadow(0 30px 32px rgb(70 12 0 / .36)) drop-shadow(0 6px 8px rgb(70 12 0 / .24));
 }
 .phone figcaption { margin-top: var(--sc-4); font-size: var(--sc-t-sm); line-height: 1.4; }
 
+/* One real month of insights beside what each line of it means. */
+.read {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: start;
+  margin-top: clamp(3.5rem, 9vw, 8rem);
+}
+.read__phone { max-width: 21rem; justify-self: center; width: 100%; }
+.read__phone img {
+  width: 100%; height: auto;
+  filter: drop-shadow(0 30px 32px rgb(70 12 0 / .36)) drop-shadow(0 6px 8px rgb(70 12 0 / .24));
+}
+.read__title {
+  margin: 0;
+  max-width: 16ch;
+  font-family: var(--sc-font-display);
+  font-stretch: 112%;
+  font-weight: 700;
+  font-size: var(--sc-t-xl);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.read__intro { margin: var(--sc-4) 0 0; max-width: 40ch; line-height: 1.5; }
+.read__list { list-style: none; padding: 0; margin: clamp(1.5rem, 3.4vw, 2.75rem) 0 0; }
+.read__list li {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--sc-2) clamp(1rem, 2.6vw, 2.5rem);
+  align-items: baseline;
+  padding-block: clamp(.85rem, 1.6vw, 1.25rem);
+  border-top: 1px solid var(--sc-hairline-strong);
+}
+.read__num {
+  margin: 0;
+  font-family: var(--sc-font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: clamp(1.9rem, 3.5vw, 3.1rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+  min-width: 4.1em;   /* every number takes the same column, whatever its digits */
+}
+.read__say { margin: 0; max-width: 44ch; line-height: 1.5; }
+.read__say b { font-weight: 500; }
+
 /* =========================================================
-   6. BANDAGE BUDDIES
+   4. BANDAGE BUDDIES
    ========================================================= */
 .bb, .bb-brief {
   background: var(--black);
@@ -351,7 +445,6 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
 .bb__copy { max-width: 38rem; }
 .bb__line span { color: var(--sc-accent); }
 .bb__line { font-size: clamp(2.3rem, 5.4vw, 5.4rem); line-height: .9; max-width: 11ch; }
-.bb__label { margin: var(--sc-5) 0 0; font-size: var(--sc-t-base); color: var(--sc-ink-soft); }
 
 /* The storefront holds still as a window while the page scrolls inside it. */
 .bb__show {
@@ -363,7 +456,7 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
 .bb__frame {
   position: absolute; inset: 0;
   container-type: size;
-  overflow: clip;
+  overflow: hidden; overflow: clip;
   border-radius: 14px;
   background: #fff;
   box-shadow: 0 40px 80px -30px rgb(0 0 0 / .85), 0 0 0 1px rgb(255 255 255 / .09);
@@ -381,9 +474,9 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
 }
 
 /* =========================================================
-   7. PACKAGING
+   5. PACKAGING
    ========================================================= */
-.pack { padding-block: var(--sc-section); overflow: clip; }
+.pack { padding-block: var(--sc-section); overflow: hidden; overflow: clip; }
 .pack__row {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
@@ -394,19 +487,29 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
 .pack__item--bewell { padding-bottom: clamp(0rem, 9vw, 8rem); }
 .pack__obj img { width: 100%; height: auto; }
 .pack__item--bewell .pack__obj img { filter: drop-shadow(0 26px 30px hsl(28 25% 18% / .30)); }
-.pack figcaption { margin-top: var(--sc-5); max-width: 36ch; font-size: var(--sc-t-sm); color: var(--sc-ink-soft); }
+.pack__name {
+  margin-top: var(--sc-5);
+  font-family: var(--sc-font-display);
+  font-weight: 500;
+  font-size: var(--sc-t-lg);
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  color: var(--sc-ink-soft);
+}
+.pack__name b { font-weight: 700; color: var(--sc-ink); }
 
 /* =========================================================
-   8. CLOSE
+   6. CLOSE
    ========================================================= */
 .close {
   background: var(--ink);
   --sc-ink: #F3F1EA; --sc-ink-soft: #A9A7A0;
   color: var(--sc-ink);
+  padding-block: var(--sc-section) var(--sc-5);
+  overflow: hidden; overflow: clip;
 }
-.close { padding-block: var(--sc-section) var(--sc-5); overflow: clip; }
 .close__tools { margin: 0; max-width: 64ch; font-size: var(--sc-t-sm); color: var(--sc-ink-soft); }
-.close__line { margin: var(--sc-4) 0 0; max-width: 34ch; font-size: var(--sc-t-lg); line-height: 1.35; letter-spacing: -0.012em; }
+.close__line { margin: var(--sc-4) 0 0; max-width: 44ch; font-size: var(--sc-t-lg); line-height: 1.35; letter-spacing: -0.012em; }
 .close__name { margin-top: clamp(2.5rem, 7vw, 6rem); font-size: clamp(3.2rem, 12.4vw, 15rem); line-height: .84; }
 .close__name span { display: block; }
 .close__foot {
@@ -427,31 +530,43 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
     gap: var(--sc-5);
     padding-block: var(--sc-5);
   }
-  .bb__show { height: min(44svh, calc(100svh - 23rem)); justify-self: end; margin-right: 0; }
+  .bb__show { height: max(11rem, min(44svh, calc(100svh - 23rem))); justify-self: end; margin-right: 0; }
   /* start the characters at the page gutter, whatever width the frame lands on */
   .bb__crew { left: calc(100% - 100vw + 2 * var(--sc-gutter)); width: 100%; bottom: -3%; }
   .bb__line { font-size: clamp(2.1rem, 11vw, 3.6rem); }
-  .bb__label { margin-top: var(--sc-3); font-size: var(--sc-t-sm); }
+}
 
+/* A phone on its side is too short to stack the line over the storefront,
+   so they sit side by side again. */
+@media (max-width: 860px) and (max-height: 520px) and (orientation: landscape) {
+  .bb__stage {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(1rem, 4vw, 3rem);
+    padding-block: 0;
+  }
+  .bb__show { height: 80svh; justify-self: auto; margin-right: clamp(0rem, 3vw, 2rem); }
+  .bb__crew { left: -46%; bottom: -4%; width: 86%; }
+  .bb__line { font-size: clamp(1.6rem, 5.4vw, 2.9rem); }
 }
 
 @media (max-width: 760px) {
   .hero { min-height: 0; }
   .index { flex-direction: column; gap: var(--sc-1); }
-  .index__links { justify-content: flex-start; gap: 0 var(--sc-4); }
-  .index__links a { padding-block: .5rem; }
+  .index__links { display: none; }   /* the list under the lede is the menu here */
 
   .hero__copy { order: 1; flex: none; gap: var(--sc-5); padding-top: var(--sc-6); padding-bottom: 0; }
   .hero h1 { font-size: clamp(2.7rem, 14.2vw, 5.4rem); }
-  .hero__lede { max-width: 22ch; }
+  .hero__lede { max-width: none; font-size: var(--sc-t-lg); line-height: 1.2; }
+  .hero__proof { max-width: none; margin-top: var(--sc-4); }
+  .hero__proof a { padding-block: .4rem; }
 
   .cluster { order: 2; position: relative; width: 100%; aspect-ratio: 1 / .98; margin-top: var(--sc-5); }
   .c-banner  { width: 84%; left: 24%; top: 2%; }
   .c-tours   { width: 33%; left: 4%;  top: 12%; }
   .c-hiring  { width: 42%; left: 22%; top: 22%; }
   .c-promo   { width: 38%; left: 66%; top: 24%; }
-  .c-phone-a { width: 35%; left: 47%; top: 34%; }
-  .c-phone-b { width: 29%; left: 76%; top: 45%; }
+  .c-burn    { width: 66%; left: 30%; top: 44%; }
+  .c-well    { width: 46%; left: 58%; top: 68%; }
 
   .brief__top { grid-template-columns: minmax(0, 1fr); }
   .brief__grid { grid-template-columns: minmax(0, 1fr); gap: var(--sc-5); }
@@ -464,21 +579,71 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
   .rate__cap { text-align: left; margin-bottom: .7rem; }
   .locus__rail { --h: clamp(11rem, 46svh, 27rem); }
 
-  .phones { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sc-6) var(--sc-5); }
-  .phone:nth-child(2) { margin-top: 22%; }
-  .phone:nth-child(3) { margin-top: -14%; }
-  .phone:nth-child(4) { margin-top: 8%; }
+  .think__list li { grid-template-columns: minmax(0, 1fr); }
+  .think__q, .think__a { max-width: none; }
+
+  /* three small phones stepping down, like stairs */
+  .phones { gap: var(--sc-3); max-width: none; }
+  .phone:nth-child(2) { margin-top: 14%; }
+  .phone:nth-child(3) { margin-top: 28%; }
+  .phone figcaption { font-size: var(--sc-t-xs); }
+
+  .read { grid-template-columns: minmax(0, 1fr); gap: var(--sc-6); }
+  .read__phone { max-width: 15rem; justify-self: start; }
+  /* the number over its sentence, so the sentence gets the full width */
+  .read__list li { grid-template-columns: minmax(0, 1fr); gap: var(--sc-1); }
+  .read__num { min-width: 0; }
+  .read__say { max-width: none; }
 
   .pack__row { grid-template-columns: minmax(0, 1fr); gap: var(--sc-7); }
-  .pack__item--bewell { padding-bottom: 0; width: 84%; margin-left: auto; }
+  .pack__item--bewell { padding-bottom: 0; }
+  .pack__item--bewell .pack__obj { width: 84%; margin-left: auto; }
 
   .close__foot { flex-wrap: wrap; }
+}
+
+/* A small phone on its side (still the stacked phone layout, but very short):
+   tightened so the name and the Locus strip fit on the screen. */
+@media (max-width: 760px) and (max-height: 480px) and (orientation: landscape) {
+  .index { flex-direction: row; gap: var(--sc-4); }
+  .index__links { justify-content: flex-end; gap: 0 var(--sc-4); }
+  .hero__copy { gap: var(--sc-3); padding-top: var(--sc-4); }
+  .hero__lede { max-width: 36ch; font-size: var(--sc-t-base); }
+  .hero__proof { display: none; }
+  .index__links { display: flex; }
+  .hero h1 { font-size: clamp(2.2rem, 17svh, 4rem); }
+
+  .locus__head { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+  .locus__title { font-size: var(--sc-t-base); max-width: 16ch; }
+  .rate { flex-direction: row-reverse; }
+  .rate__num { font-size: clamp(3rem, 24svh, 5rem); }
+  .rate__cap { text-align: right; }
+  .locus__rail { --h: clamp(7rem, 42svh, 12rem); }
+}
+
+/* Laptop-height windows: the top tightens so the name stays on the first screen */
+@media (max-height: 820px) and (min-width: 761px) {
+  .hero__copy { padding-top: clamp(1rem, 4.5svh, 2.5rem); gap: var(--sc-4); }
+  .hero__lede { font-size: clamp(1.35rem, 3.6svh, 1.9rem); }
+  .hero__proof { margin-top: var(--sc-3); }
+  .hero__proof a { padding-block: .34rem; }
+  .hero h1 { font-size: clamp(3.2rem, min(9.2vw, 18svh), 10.5rem); }
 }
 
 /* Short, wide windows: keep the Locus header from eating the rail */
 @media (max-height: 620px) and (min-width: 761px) {
   .rate__num { font-size: clamp(4.5rem, 22svh, 9rem); }
   .locus__rail { --h: clamp(11rem, 46svh, 30rem); }
+}
+
+/* Shorter still (a phone on its side, a squat laptop window): the title wall
+   shrinks to the screen so the name is on it, not below it. */
+@media (max-height: 560px) and (min-width: 761px) {
+  .hero { --hero-h: max(19rem, 100svh); }
+  .hero__copy { gap: var(--sc-4); padding-block: clamp(.75rem, 4svh, 2rem) clamp(.75rem, 4svh, 1.5rem); }
+  .hero__lede { max-width: 30ch; font-size: var(--sc-t-lg); }
+  .hero__proof { display: none; }
+  .hero h1 { font-size: clamp(2.4rem, min(9.2vw, 19svh), 6rem); }
 }
 
 /* =========================================================
@@ -507,6 +672,60 @@ figcaption b { font-weight: 500; color: var(--sc-ink); }
   .bb__frame { overflow-y: auto; }
 }
 
+/* =========================================================
+   STATIC MODE
+   The page when the scroll engine is not running: scripts switched off,
+   blocked, or failed to load. <html> carries "no-sc" until a script in the
+   head removes it, and gets it back if the engine never starts. Everything
+   is visible, nothing is pinned, and the number shows where it ended up.
+   ========================================================= */
+.no-sc [data-sc-in], .no-sc [data-sc-stagger] > * { opacity: 1; transform: none; transition: none; }
+.no-sc .locus__stage { padding-bottom: var(--sc-7); }
+.no-sc .locus__rail {
+  width: auto; height: auto;
+  overflow-x: auto; overscroll-behavior-x: contain;
+  padding-block: var(--sc-6) var(--sc-4);
+}
+.no-sc .rate__wheel { transform: translate3d(0, -4em, 0); }
+.no-sc .bb__stage { padding-block: var(--sc-section); }
+.no-sc .bb__frame { overflow-y: auto; }
+
+/* =========================================================
+   PRINT AND SAVE AS PDF
+   Paper cannot scroll, so nothing waits to be revealed, nothing is pinned,
+   and the strip of Locus pieces wraps onto as many rows as it needs.
+   ========================================================= */
 @media print {
   .sc-grain, .skip, .index__links { display: none; }
+  .hero__proof a { color: inherit; }
+  /* keep the colored grounds: without them the light text prints on white */
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  [data-sc-in], [data-sc-stagger] > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+  [data-sc-parallax], .plane, .bb__page { transform: none !important; }
+  .plane img { animation: none; }
+
+  .hero { --hero-h: 34rem; }
+  .locus, .bb { height: auto !important; }
+  .locus__stage, .bb__stage { position: static !important; height: auto !important; overflow: visible !important; }
+  .locus__stage { display: block; padding-bottom: var(--sc-6); }
+  .locus__rail {
+    --h: 11rem;
+    width: auto; height: auto;
+    flex-wrap: wrap; row-gap: var(--sc-5);
+    padding-block: var(--sc-5);
+    transform: none !important;
+  }
+  .rate__wheel { transform: translate3d(0, -4em, 0) !important; }
+  .bb__stage { padding-block: var(--sc-6); }
+  .bb__show { height: 26rem; }
+
+  /* soft shadows print as hard dark boxes */
+  .piece img, .plane img, .bb__frame { box-shadow: none !important; }
+  /* the phones in one row, so a page break cannot cut through one */
+  .phones { gap: var(--sc-4); max-width: 30rem; margin-left: 0; }
+  .read__phone { max-width: 13rem; }
+  .phone { margin-top: 0 !important; }
+  .close__foot a { display: none; }
+  figure, .phones, .bb__show, .brief__cell, .brief__top, .think__list li, .read__list li, .close { break-inside: avoid; }
 }

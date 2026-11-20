@@ -9,8 +9,28 @@
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
-  var api = window.ScrollCraft ? window.ScrollCraft.mount(document.body) : null;
+  // If the engine is missing or fails to start, the page falls back to static
+  // mode (see the script in the head of index.html), so carry on without it.
+  var api = null;
+  try { api = window.ScrollCraft ? window.ScrollCraft.mount(document.body) : null; } catch (e) { api = null; }
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Reduced motion: scroll regions ----------
+     With reduced motion nothing is pinned; the Locus strip and the storefront
+     are ordinary scroll regions instead (site.css). A scroll region with
+     nothing focusable inside cannot be reached from the keyboard in every
+     browser, so give these two a tab stop and a name.                    */
+  function region(selector, label) {
+    var el = document.querySelector(selector);
+    if (!el) return;
+    el.tabIndex = 0;
+    el.setAttribute('role', 'region');
+    el.setAttribute('aria-label', label);
+  }
+  if (reduce) {
+    region('.locus__rail', 'Locus Robotics pieces. Scrolls sideways.');
+    region('.bb__frame', 'Bandage Buddies storefront. Scrolls.');
+  }
 
   /* ---------- The rate wheel ----------
      The digit strip 3 4 5 6 7 is rolled by the Locus act's progress. Rather
@@ -19,35 +39,47 @@
      always looking at a clean digit.                                    */
   var locus = document.querySelector('.locus');
   var wheel = locus && locus.querySelector('.rate__wheel');
+  var act = null;
   if (api && wheel && !reduce) {
-    var act = null;
     for (var i = 0; i < api.acts.length; i++) if (api.acts[i].el === locus) act = api.acts[i];
+  }
+  if (act) {
     var lastK = -1;
     var roll = function () {
-      if (!act) return;
-      var t = Math.max(0, Math.min(1, (act.p - 0.05) / 0.82));
+      var t = Math.max(0, Math.min(1, (act.p - 0.05) / 0.82));   // same window as --t in site.css
       var x = t * 4, whole = Math.floor(x), part = x - whole;
       var r = Math.max(0, Math.min(1, (part - 0.32) / 0.36));   // rest, roll, rest
       r = r * r * (3 - 2 * r);
       var k = Math.min(4, whole + r);
       if (Math.abs(k - lastK) > 0.0005) { wheel.style.setProperty('--k', k.toFixed(4)); lastK = k; }
     };
-    var queued = false;
-    window.addEventListener('scroll', function () {
-      if (queued) return;
-      queued = true;
-      // two frames: the engine updates the act's progress on the first
-      requestAnimationFrame(function () { requestAnimationFrame(function () { queued = false; roll(); }); });
-    }, { passive: true });
-    window.addEventListener('resize', roll, { passive: true });
-    roll();
+    /* The engine recomputes the act's progress in its own animation frame.
+       Roll on the frame of each scroll event and once more on the frame after,
+       so the wheel always ends on the engine's final value, whichever callback
+       ran first and however the last scroll event was timed.             */
+    var framesLeft = 0, rolling = false;
+    var step = function () {
+      rolling = false;
+      roll();
+      if (--framesLeft > 0) { rolling = true; requestAnimationFrame(step); }
+    };
+    var requestRoll = function () {
+      framesLeft = 2;
+      if (!rolling) { rolling = true; requestAnimationFrame(step); }
+    };
+    window.addEventListener('scroll', requestRoll, { passive: true });
+    window.addEventListener('resize', requestRoll, { passive: true });
+    // the engine lays out again once the fonts arrive, which moves the act
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(requestRoll);
+    requestRoll();
   }
 
   /* ---------- Title wall: three planes of real work ----------
      Scroll moves each plane at its own rate, so the far pieces lag and the
      phones overtake them. On a mouse, the planes also lean a little toward
      the pointer. Scroll is written directly (a lagging plane reads as a
-     stutter under a thumb); only the pointer lean is eased.            */
+     stutter under a thumb); only the pointer lean is eased. Frames are only
+     requested while something is changing, so an idle page does no work.   */
   var hero = document.querySelector('[data-hero]');
   if (!hero || reduce) return;
 
@@ -63,6 +95,31 @@
 
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var mx = 0, my = 0, live = true, frame = 0;
+  var heroH = hero.offsetHeight;
+
+  function tick() {
+    frame = 0;
+    var y = Math.max(0, Math.min(window.scrollY, heroH));
+    var easing = false;
+    for (var i = 0; i < planes.length; i++) {
+      var P = planes[i];
+      var tx = -mx * P.lean, ty = -my * P.lean * 0.6;
+      P.x += (tx - P.x) * 0.09;
+      P.y += (ty - P.y) * 0.09;
+      if (Math.abs(tx - P.x) < 0.05 && Math.abs(ty - P.y) < 0.05) { P.x = tx; P.y = ty; }
+      else easing = true;
+      P.el.style.transform =
+        'translate3d(' + P.x.toFixed(2) + 'px,' + (y * P.depth + P.y).toFixed(2) + 'px,0)';
+    }
+    if (easing) request();   // keep easing toward the pointer, then stop
+  }
+  function request() { if (live && !frame) frame = requestAnimationFrame(tick); }
+  function measure() { heroH = hero.offsetHeight; request(); }
+
+  window.addEventListener('scroll', request, { passive: true });
+  window.addEventListener('resize', measure, { passive: true });
+  window.addEventListener('load', measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
 
   if (fine) {
     hero.addEventListener('pointermove', function (e) {
@@ -70,27 +127,17 @@
       var r = hero.getBoundingClientRect();
       mx = (e.clientX - r.left) / r.width - 0.5;
       my = (e.clientY - r.top) / r.height - 0.5;
+      request();
     }, { passive: true });
-    hero.addEventListener('pointerleave', function () { mx = 0; my = 0; }, { passive: true });
-  }
-
-  function tick() {
-    var y = Math.max(0, Math.min(window.scrollY, hero.offsetHeight));
-    for (var i = 0; i < planes.length; i++) {
-      var P = planes[i];
-      P.x += (-mx * P.lean - P.x) * 0.09;
-      P.y += (-my * P.lean * 0.6 - P.y) * 0.09;
-      P.el.style.transform =
-        'translate3d(' + P.x.toFixed(2) + 'px,' + (y * P.depth + P.y).toFixed(2) + 'px,0)';
-    }
-    frame = live ? requestAnimationFrame(tick) : 0;
+    hero.addEventListener('pointerleave', function () { mx = 0; my = 0; request(); }, { passive: true });
   }
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (entries) {
-      live = entries[0].isIntersecting;
-      if (live && !frame) frame = requestAnimationFrame(tick);
+      // a batch can hold several records; the last one is the current state
+      live = entries[entries.length - 1].isIntersecting;
+      request();
     }).observe(hero);
   }
-  frame = requestAnimationFrame(tick);
+  request();
 })();
